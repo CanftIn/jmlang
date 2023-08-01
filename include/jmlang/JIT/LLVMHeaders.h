@@ -4,7 +4,7 @@
 #if LLVM_VERSION >= 140
 // We're good to go
 #else
-#error "Compiling Halide requires LLVM 14.0 or newer"
+#error "requires LLVM 14.0 or newer"
 #endif
 
 // No msvc warnings from llvm headers please

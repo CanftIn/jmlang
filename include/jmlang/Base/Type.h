@@ -169,7 +169,7 @@ struct type_of_helper<bool> {
   operator Type() { return Bool(); }
 };
 
-/** Construct the halide equivalent of a C type */
+/** Construct the jmlang equivalent of a C type */
 template <typename T>
 Type type_of() {
   return Type(type_of_helper<T>());

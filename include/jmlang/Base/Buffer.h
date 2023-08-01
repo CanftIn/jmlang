@@ -79,7 +79,7 @@ struct BufferContents {
 /// memory, or some other memory space (e.g. a gpu). If you want to use
 /// this as an Image, see the Image class. Casting a Buffer to an Image
 /// will do any appropriate copy-back. This class is a fairly thin
-/// wrapper on a buffer_t, which is the C-style type Halide uses for
+/// wrapper on a buffer_t, which is the C-style type Jmlang uses for
 /// passing buffers around.
 class Buffer {
   internal::IntrusivePtr<internal::BufferContents> contents;
@@ -122,7 +122,7 @@ class Buffer {
     return contents.ptr->buf.host_dirty;
   }
 
-  /// Let Halide know that the host-side memory backing this buffer
+  /// Let Jmlang know that the host-side memory backing this buffer
   /// has been externally modified. You shouldn't normally need to
   /// call this, because it is done for you when you cast a Buffer to
   /// an Image in order to modify it.
@@ -138,11 +138,11 @@ class Buffer {
     return contents.ptr->buf.dev_dirty;
   }
 
-  /// Let Halide know that the device-side memory backing this
+  /// Let Jmlang know that the device-side memory backing this
   /// buffer has been externally modified, and so the cpu-side memory
   /// is invalid. A copy-back will occur the next time you cast this
   /// Buffer to an Image, or the next time this buffer is accessed on
-  /// the host in a halide pipeline.
+  /// the host in a jmlang pipeline.
   void set_device_dirty(bool dirty = true) {
     assert(defined());
     contents.ptr->buf.host_dirty = dirty;
@@ -195,7 +195,7 @@ class Buffer {
     contents.ptr->buf.min[3] = m3;
   }
 
-  /// Get the Halide type of the contents of this buffer.
+  /// Get the Jmlang type of the contents of this buffer.
   Type type() const {
     assert(defined());
     return contents.ptr->type;
@@ -212,7 +212,7 @@ class Buffer {
   /// Get the runtime name of this buffer used for debugging.
   const std::string& name() const { return contents.ptr->name; }
 
-  /// Convert this buffer to an argument to a halide pipeline.
+  /// Convert this buffer to an argument to a jmlang pipeline.
   operator Argument() const { return Argument(name(), true, type()); }
 
   /// Declare that this buffer was created by the given jit-compiled

@@ -107,7 +107,7 @@ class Function {
     for (size_t i = 0; i < n.size(); i++) {
       assert(n[i] != '.' &&
              "Func names may not contain the character '.', as it is used "
-             "internally by Halide as a separator");
+             "internally by Jmlang as a separator");
     }
     contents.ptr->name = n;
   }

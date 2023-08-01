@@ -9,17 +9,15 @@ namespace internal {
 /// A function call. This can represent a call to some extern
 /// function (like sin), but it's also our multi-dimensional
 /// version of a Load, so it can be a load from an input image, or
-/// a call to another halide function. The latter two types of call
+/// a call to another jmlang function. The latter two types of call
 /// nodes don't survive all the way down to code generation - the
 /// lowering process converts them to Load nodes.
 struct Call : public ExprNode<Call> {
   std::string name;
   std::vector<Expr> args;
-  typedef enum { Image, Extern, Halide, Intrinsic } CallType;
+  typedef enum { Image, Extern, Jmlang, Intrinsic } CallType;
   CallType call_type;
 
-  // Halide uses calls internally to represent certain operations
-  // (instead of IR nodes). These are matched by name.
   static const std::string debug_to_file,
       shuffle_vector,
       interleave_vectors,
@@ -38,7 +36,7 @@ struct Call : public ExprNode<Call> {
       extract_buffer_extent,
       trace;
 
-  // If it's a call to another halide function, this call node
+  // If it's a call to another function, this call node
   // holds onto a pointer to that function.
   Function func;
 
@@ -61,16 +59,16 @@ struct Call : public ExprNode<Call> {
     for (size_t i = 0; i < args.size(); i++) {
       assert(args[i].defined() && "Call of undefined");
     }
-    if (call_type == Halide) {
+    if (call_type == Jmlang) {
       assert(value_index >= 0 && value_index < func.outputs() &&
-             "Value index out of range in call to halide function");
+             "Value index out of range in call to jmlang function");
       assert((func.has_pure_definition() || func.has_extern_definition()) &&
-             "Call to undefined halide function");
+             "Call to undefined jmlang function");
       assert((int)args.size() <= func.dimensions() &&
              "Call node with too many arguments.");
       for (size_t i = 0; i < args.size(); i++) {
         assert(args[i].type() == Int(32) &&
-               "Args to call to halide function must be type Int(32)");
+               "Args to call to jmlang function must be type Int(32)");
       }
     } else if (call_type == Image) {
       assert((param.defined() || image.defined()) &&
@@ -96,10 +94,10 @@ struct Call : public ExprNode<Call> {
   /// Convenience constructor for calls to other functions.
   static Expr make(Function func, const std::vector<Expr>& args, int idx = 0) {
     assert(idx >= 0 && idx < func.outputs() &&
-           "Value index out of range in call to halide function");
+           "Value index out of range in call to jmlang function");
     assert((func.has_pure_definition() || func.has_extern_definition()) &&
-           "Call to undefined halide function");
-    return make(func.output_types()[idx], func.name(), args, Halide, func, idx,
+           "Call to undefined jmlang function");
+    return make(func.output_types()[idx], func.name(), args, Jmlang, func, idx,
                 Buffer(), Parameter());
   }
 

@@ -35,7 +35,7 @@ struct ParameterContents {
   }
 };
 
-/// A reference-counted handle to a parameter to a halide
+/// A reference-counted handle to a parameter to a jmlang
 /// pipeline. May be a scalar parameter or a buffer
 class Parameter {
   IntrusivePtr<ParameterContents> contents;

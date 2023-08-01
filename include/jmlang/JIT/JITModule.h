@@ -37,7 +37,7 @@ struct JITModule {
   void (*copy_to_dev)(struct buffer_t*);
   void (*free_dev_buffer)(struct buffer_t*);
 
-  /// The type of a halide runtime error handler function.
+  /// The type of a jmlang runtime error handler function.
   typedef void (*ErrorHandler)(const char*);
 
   /// Set the runtime error handler for this module.
@@ -49,13 +49,13 @@ struct JITModule {
 
   /// Set a custom parallel for loop launcher. See
   /// Func::set_custom_do_par_for.
-  typedef int (*HalideTask)(int, uint8_t*);
-  void (*set_custom_do_par_for)(int (*custom_do_par_for)(HalideTask, int, int,
+  typedef int (*JMTask)(int, uint8_t*);
+  void (*set_custom_do_par_for)(int (*custom_do_par_for)(JMTask, int, int,
                                                          uint8_t*));
 
   /// Set a custom do parallel task. See
   /// Func::set_custom_do_task.
-  void (*set_custom_do_task)(int (*custom_do_task)(HalideTask, int, uint8_t*));
+  void (*set_custom_do_task)(int (*custom_do_task)(JMTask, int, uint8_t*));
 
   /// Set a custom trace function. See Func::set_custom_trace.
   typedef void (*TraceFn)(const char*, int, int, int, int, int, const void*,
