@@ -21,7 +21,7 @@ if(CMAKE_CXX_STANDARD LESS 17)
   message(FATAL_ERROR "jmlang requires C++17 or newer but CMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}")
 endif()
 
-option(JMLANG_OPT_BUILD_UNITTESTS "Build all jmlang unittests" ON)
+option(JMLANG_OPT_BUILD_TESTS "Build all jmlang tests" ON)
 option(JMLANG_OPT_BUILD_BENCHMARKS "Build all jmlang benchmarks" ON)
 option(JMLANG_OPT_BUILD_SHARED_LIBS "Build jmlang shared libraries" ON)
 
@@ -88,9 +88,9 @@ add_library(${STATIC_LIB_NAME} STATIC ${JMLANG_SRCS})
 target_link_libraries(${STATIC_LIB_NAME} JMLANG::LLVM)
 target_compile_features(${STATIC_LIB_NAME} PUBLIC cxx_std_17)
 
-#if (JMLANG_OPT_BUILD_UNITTESTS)
-#  add_subdirectory(unittests #[[EXCLUDE_FROM_ALL]])
-#endif()
+if (JMLANG_OPT_BUILD_TESTS)
+  add_subdirectory(test #[[EXCLUDE_FROM_ALL]])
+endif()
 
 # if (JMLANG_OPT_BUILD_BENCHMARKS)
 #   add_subdirectory(benchmarks #[[EXCLUDE_FROM_ALL]])
