@@ -1,5 +1,5 @@
-#ifndef JMLANG_BASE_ARGUMENT_H
-#define JMLANG_BASE_ARGUMENT_H
+#ifndef JMLANG_IR_ARGUMENT_H
+#define JMLANG_IR_ARGUMENT_H
 
 #include <string>
 
@@ -27,4 +27,4 @@ struct Argument {
 
 }  // namespace jmlang
 
-#endif  // JMLANG_BASE_ARGUMENT_H
+#endif  // JMLANG_IR_ARGUMENT_H

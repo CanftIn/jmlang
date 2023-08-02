@@ -3,11 +3,11 @@
 
 #include <cstdint>
 
-#include "jmlang/Base/Argument.h"
 #include "jmlang/Base/IntrusivePtr.h"
 #include "jmlang/Base/Type.h"
 #include "jmlang/Base/Util.h"
 #include "jmlang/Base/buffer_t.h"
+#include "jmlang/IR/Argument.h"
 #include "jmlang/JIT/JITModule.h"
 
 namespace jmlang {
@@ -72,6 +72,8 @@ struct BufferContents {
     assert(t.width == 1 && "Can't create of a buffer of a vector type");
   }
 };
+
+}  // namespace internal
 
 /// The internal representation of an image, or other dense array
 /// data. The Image type provides a typed view onto a buffer for the
@@ -263,7 +265,6 @@ class Buffer {
   }
 };
 
-}  // namespace internal
 }  // namespace jmlang
 
 #endif  // JMLANG_BASE_BUFFER_H
